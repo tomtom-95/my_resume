@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume - <%= heroData.name %>
+  </title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #e0f7fa, #80deea);
+      color: #333;
+      box-sizing: border-box;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 794px;
+      min-height: 1123px;
+      background: white;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .sidebar {
+      background: linear-gradient(135deg, #004085, #007bff);
+      color: white;
+      width: 25%;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .sidebar img {
+      width: 100%;
+      max-height: 150px;
+      object-fit: contain;
+      margin-bottom: 10px;
+      border: 4px solid white;
+      border-radius: 8px;
+    }
+
+    .sidebar h1 {
+      font-size: 1.5rem;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .sidebar p {
+      font-size: 0.9rem;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .contact-info {
+      margin-top: 20px;
+      text-align: left;
+      width: 100%;
+    }
+
+    .contact-header {
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      border-bottom: 2px solid white;
+      padding-bottom: 5px;
+      text-align: center;
+    }
+
+    .contact-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .contact-item a {
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .contact-item a:hover {
+      color: #ffd700;
+    }
+
+    .content {
+      flex: 1;
+      padding: 10px;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      color: #004085;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #e0e0e0;
+      padding-bottom: 5px;
+      text-transform: uppercase;
+    }
+
+    section {
+      margin-bottom: 20px;
+      page-break-inside: avoid;
+      page-break-after: avoid;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 15px;
+    }
+
+    .education-item,
+    .experience-item {
+      margin-bottom: 15px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #e0e0e0;
+      page-break-inside: avoid;
+    }
+
+    .education-item strong,
+    .experience-item strong {
+      font-size: 1.2rem;
+      color: #333;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .education-item span,
+    .experience-item span {
+      font-size: 0.9rem;
+      color: #666;
+      display: block;
+      margin-top: 5px;
+    }
+
+    .skills-section {
+      margin-top: 20px;
+      line-height: 1.5;
+    }
+
+    .skills-section strong {
+      font-size: 1rem;
+      color: #004085;
+      display: block;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+    }
+
+    .skills-section ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .skills-section ul li {
+      font-size: 0.9rem;
+      color: #333;
+      display: inline-block;
+      margin-right: 8px;
+      margin-bottom: 5px;
+      background: #f0f4f8;
+      border: 1px solid #d0d7de;
+      border-radius: 5px;
+      padding: 3px 8px;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.8rem;
+      color: #555;
+    }
+
+    .about-me {
+      margin-top: 30px;
+      /* Spazio aggiunto per separare About Me dai contatti */
+      text-align: center;
+      width: 100%;
+    }
+
+    section:first-of-type {
+      margin-top: 0;
+    }
+
+    .highlights {
+      list-style: disc;
+      margin-top: 5px;
+      /* Mantiene la lista vicina alla data e alla location */
+      padding-left: 35px;
+      /* Indenta la lista per mostrarla chiaramente come parte del job */
+    }
+
+    .highlights li {
+      font-size: 0.9rem;
+      color: #555;
+      margin-bottom: 4px;
+      line-height: 1.4;
+    }
+
+
+
+    @media print {
+      body {
+        background: none;
+        color: #000;
+      }
+
+      .container {
+        box-shadow: none;
+        border: 1px solid #ccc;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <img src="<%= heroData.imageSrc %>" alt="Profile Picture">
+      <h1>
+        <%= heroData.name %>
+      </h1>
+      <div class="contact-info">
+        <div class="contact-header">Contact Me</div>
+        <% contact.items.forEach(item=> { %>
+          <% if (item.type !=='Location' ) { %>
+            <div class="contact-item">
+              <span>
+                <%= item.type %>
+              </span>
+              <a href="<%= item.href %>" target="_blank">
+                <%= item.text %>
+              </a>
+            </div>
+            <% } %>
+              <% }); %>
+
+                <!-- Website Contact -->
+                <% if (website) { %>
+                  <div class="contact-item">
+                    <span>Website</span>
+                    <a href="https://<%= website %>" target="_blank">
+                      <%= website %>
+                    </a>
+                  </div>
+                  <% } %>
+      </div>
+
+      <!-- About Section (Updated title style) -->
+      <section class="about-me">
+        <div class="contact-header">About Me</div>
+        <p>
+          <%= aboutData.description %>
+        </p>
+      </section>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+      <!-- Education Section -->
+      <section>
+        <h2>Education</h2>
+        <ul>
+          <% education.forEach(ed=> { %>
+            <li class="education-item">
+              <strong>
+                <%= ed.title %>
+              </strong>
+              <span>
+                <%= ed.date %> • <%= ed.location %>
+              </span>
+              <% if (ed.grade) { %>
+                <span>Grade: <%= ed.grade %></span>
+                <% } %>
+            </li>
+            <% }); %>
+        </ul>
+      </section>
+
+      <!-- Experience Section -->
+      <section>
+        <h2>Experience</h2>
+        <ul>
+          <% experience.forEach(job=> { %>
+            <li class="experience-item">
+              <strong>
+                <%= job.title %>
+              </strong>
+              <span>
+                <%= job.date %> • <em>
+                    <%= job.location %>
+                  </em>
+              </span>
+
+              <% if (job.highlights && job.highlights.length> 0) { %>
+                <ul class="highlights">
+                  <% job.highlights.forEach(point=> { %>
+                    <li>
+                      <%= point %>
+                    </li>
+                    <% }); %>
+                </ul>
+                <% } %>
+            </li>
+            <% }); %>
+        </ul>
+      </section>
+
+
+      <!-- Skills Section -->
+      <section>
+        <h2>Skills</h2>
+        <div class="skills-section">
+          <% skills.forEach(group=> { %>
+            <strong>
+              <%= group.name %>
+            </strong>
+            <ul>
+              <% group.skills.forEach(skill=> { %>
+                <li>
+                  <%= skill.name %>
+                </li>
+                <% }); %>
+            </ul>
+            <% }); %>
+        </div>
+      </section>
+
+      <!-- Portfolio Section -->
+      <% if (portfolio && portfolio.length> 0) { %>
+        <section>
+          <h2>Portfolio</h2>
+          <div class="portfolio-grid">
+            <% portfolio.forEach(project=> { %>
+              <div class="portfolio-card">
+                <h3>
+                  <%= project.title %>
+                </h3>
+                <p>
+                  <%= project.modalText %>
+                </p>
+              </div>
+              <% }); %>
+          </div>
+        </section>
+        <% } %>
+
+          <footer>
+            <p>I authorize the processing of my personal data in accordance with Legislative Decree 196 of June 30,
+              2003, and Article 13 of the GDPR (EU Regulation 2016/679).</p>
+          </footer>
+</body>
+
+</html>
