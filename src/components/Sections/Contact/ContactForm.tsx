@@ -33,7 +33,7 @@ const ContactForm: FC = memo(() => {
     async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
 
-      const botToken = '7335325551:AAEKtdlUbGq4fLHE2v7i4yKKsSd8Zl3e2Bw';
+      const botToken = ''; // do I need a bot token?
       const chatId = '822149520';
       const message = `Name: ${data.name}\nEmail: ${data.email}\nMessage: ${data.message}`;
 
